@@ -1,4 +1,5 @@
 import mmap
+from typing import Union
 
 KEY_SIZE = 16
 VAL_SIZE = 64
@@ -41,7 +42,7 @@ class MemoryKVStore:
         self.view[offset:offset + KEY_SIZE] = key.encode('utf-8').ljust(KEY_SIZE, b'\x00')
         self.view[offset + KEY_SIZE:offset + ENTRY_SIZE] = value.ljust(VAL_SIZE, b'\x00')
 
-    def get(self, key: str) -> bytes | None:
+    def get(self, key: str) -> Union[bytes, None]:
         idx = self._find_key_index(key)
         if idx == -1:
             return None
